@@ -4,23 +4,24 @@ ORG 0
 
 MOV P2M1, #0 					;making P2 bidirectional
 MOV P1M1, #0 					;making P1 bidirectional
-MOV P0M1, #0 				;making P0 bidirectional
+MOV P0M1, #0 					;making P0 bidirectional
 
 INC_B:	JB P2.0, DEC_B 			;increments if P2.0 is pressed
-IBSP:	ACALL DELAY
+IBSP:	ACALL DELAY				;delay to prevent debouncing
 		JNB P2.0, IBSP 			;holds until button not pressed
 		INC A
 		JNB PSW.6, LEDS			;jumps if no roll over
 		CLR A 					;clears A top nibble
-		ACALL LEDS 				;jumps and clears C
-		SJMP INC_B
+		ACALL BEEP				;goes to Beep subroutine
+		JBC PSW.6, LEDS 		;jumps and clears CA
 		
 DEC_B:	JB P0.1, INC_B 			;deincrements if P0.1 is pressed
-DBSP:	ACALL DELAY
-		JNB P0.1, DBSP 
+DBSP:	ACALL DELAY				;delay to prevent debouncing
+		JNB P0.1, DBSP 			;holds until button not pressed
 		DEC A
 		JZ LEDS					;jumps if no roll under
 		ANL A, #0FH 			;masks top nibble of A
+		ACALL BEEP				;goes to Beep subroutine
 		SJMP LEDS
 		
 LEDS:	MOV C, ACC.0 			;stores 0 bit of A in C
@@ -38,11 +39,8 @@ LEDS:	MOV C, ACC.0 			;stores 0 bit of A in C
 		MOV C, ACC.3 			;stores 0 bit of A in C
 		CPL C					;complements C
 		MOV P2.4, C 			;o/p C to P2.4
-								;code above matches LEDS to A so o/p can be seen
-		ACALL DELAY
-		JB ACC.4, BEEP
-		JZ BEEP
-		SJMP INC_B		
+;code above matches LEDS to A lower nibble so o/p can be seen
+		SJMP INC_B				;back to polling
 	
 DELAY:	MOV R4, #05H
 DELAY1:	MOV R3, #0FFH
