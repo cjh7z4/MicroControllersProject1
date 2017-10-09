@@ -13,7 +13,7 @@ IBSP:	ACALL DELAY				;delay to prevent debouncing
 		JNB PSW.6, LEDS			;jumps if no roll over
 		CLR A 					;clears A top nibble
 		ACALL BEEP				;goes to Beep subroutine
-		JBC PSW.6, LEDS 		;jumps and clears CA
+		JBC PSW.6, LEDS 		;jumps and clears auxC
 		
 DEC_B:	JB P0.1, INC_B 			;deincrements if P0.1 is pressed
 DBSP:	ACALL DELAY				;delay to prevent debouncing
