@@ -11,15 +11,14 @@ IBSP:	ACALL DELAY				;delay to prevent debouncing
 		JNB P2.0, IBSP 			;holds until button not pressed
 		INC A
 		SJMP LEDS
-
 		
 DEC_B:	JB P0.1, INC_B 			;deincrements if P0.1 is pressed
 DBSP:	ACALL DELAY				;delay to prevent debouncing
 		JNB P0.1, DBSP 			;holds until button not pressed
 		DEC A
-		SJMP LEDS
 		
 LEDS:	CPL A		;complement so bits of A are fight for LED output
+
 		MOV C, ACC.0 			;stores 0 bit of A in C	
 		MOV P0.4, C 			;o/p C to P0.4
 		
@@ -31,16 +30,28 @@ LEDS:	CPL A		;complement so bits of A are fight for LED output
 		
 		MOV C, ACC.3 			;stores 0 bit of A in C
 		MOV P2.4, C 			;o/p C to P2.4
-		CPL A		;restore A to proper binary not complement
-		JNB ACC.4, INC_B ;back to polling if no rollover
-		ANL A, #0FH				;masks the upper nibble of A
-		SJMP BEEP				;jumps beep
-		
-		
 ;code above matches LEDS to A lower nibble so o/p can be seen
 
+		CPL A		;restore A to proper binary not complement
+		JNB ACC.4, SKIP_BP	;jumps if NOT rollover
+		ACALL BEEP			;call beep when rollover
+SKIP_BP:ANL A, #0FH			;masks the upper nibble of A
+		
+		MOV C, PSW.0		;code for showing parity flag
+		CPL C
+		MOV P2.5, C
+		
+		SJMP INC_B			;back to polling
+			
+DELAY:	MOV R4, #05H
+DELAY1:	MOV R3, #0FFH
+DELAY2:	MOV R2, #0FFH
+DELAY3:	DJNZ R2, DELAY3 		;creates a delay to prevent debouncing
+		DJNZ R3, DELAY2
+		DJNZ R4, DELAY1
+		RET
 
-BEEP:   MOV R3,#64      
+BEEP: 	MOV R3,#64      
 LOOP3:  MOV R2,#32       
 LOOP2:  MOV R1,#32        
 LOOP1:  MOV R0,#32         
@@ -51,14 +62,7 @@ LOOP0:	NOP
 		CPL  P1.7         ;BEEP!!!
 		DJNZ R2,LOOP2     ;DECREMENTS REGISTER2 RETURNS TO LOOP2
 		DJNZ R3,LOOP3     ;DECREMENTS REGISTER3 RETURNS TO LOOP3
-		SJMP INC_B
+		RET
 
-	
-DELAY:	MOV R4, #05H
-DELAY1:	MOV R3, #0FFH
-DELAY2:	MOV R2, #0FFH
-DELAY3:	DJNZ R2, DELAY3 		;creates a delay to prevent debouncing
-		DJNZ R3, DELAY2
-		DJNZ R4, DELAY1
-		RET		
+
 END
