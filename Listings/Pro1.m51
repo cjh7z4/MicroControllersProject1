@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        10/12/2017  23:48:47  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        10/13/2017  01:47:39  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -19,7 +19,7 @@ LINK MAP OF MODULE:  .\Objects\Pro1 (PRO1)
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
-            CODE    0000H     005EH     ABSOLUTE     
+            CODE    0000H     007FH     ABSOLUTE     
 
 
 
@@ -36,7 +36,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   B:00C8H.4       SYMBOL        ALTCD
   D:00A2H         SYMBOL        AUXR1
   D:00F0H         SYMBOL        B
-  C:004AH         SYMBOL        BEEP
+  C:006BH         SYMBOL        BEEP
   D:00BDH         SYMBOL        BRGCON
   D:00BEH         SYMBOL        BRGR0
   D:00BFH         SYMBOL        BRGR1
@@ -48,30 +48,33 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   B:0080H.3       SYMBOL        CIN1B
   B:0080H.2       SYMBOL        CIN2A
   B:0080H.1       SYMBOL        CIN2B
+  C:001EH         SYMBOL        CLR_EX
   D:00ACH         SYMBOL        CMP1
   B:0080H.6       SYMBOL        CMP1O
   D:00ADH         SYMBOL        CMP2
   B:0080H.0       SYMBOL        CMP2O
   B:0080H.5       SYMBOL        CMPREF
+  C:0009H         SYMBOL        COUNTER
   B:00D8H.0       SYMBOL        CRSEL
   B:00D0H.7       SYMBOL        CY
-  C:0017H         SYMBOL        DBSP
-  C:0014H         SYMBOL        DEC_B
+  C:0031H         SYMBOL        DBSP
+  C:002EH         SYMBOL        DEC_B
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/13/2017  01:47:39  PAGE 2
+
+
   D:00F3H         SYMBOL        DEEADR
   D:00F1H         SYMBOL        DEECON
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/12/2017  23:48:47  PAGE 2
-
-
   D:00F2H         SYMBOL        DEEDAT
-  C:003DH         SYMBOL        DELAY
-  C:003FH         SYMBOL        DELAY1
-  C:0041H         SYMBOL        DELAY2
-  C:0043H         SYMBOL        DELAY3
+  C:005EH         SYMBOL        DELAY
+  C:0060H         SYMBOL        DELAY1
+  C:0062H         SYMBOL        DELAY2
+  C:0064H         SYMBOL        DELAY3
   D:0095H         SYMBOL        DIVM
   D:0083H         SYMBOL        DPH
   D:0082H         SYMBOL        DPL
   B:00A8H.7       SYMBOL        EA
   B:00A8H.5       SYMBOL        EBO
+  C:000EH         SYMBOL        EBSP
   B:00E8H.2       SYMBOL        EC
   B:00E8H.4       SYMBOL        ECCU
   B:00E8H.0       SYMBOL        EI2C
@@ -86,6 +89,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   B:00A8H.6       SYMBOL        EWDRT
   B:00A8H.0       SYMBOL        EX0
   B:00A8H.2       SYMBOL        EX1
+  C:000BH         SYMBOL        EXIT_B
   B:00D0H.5       SYMBOL        F0
   B:00D0H.1       SYMBOL        F1
   B:0098H.7       SYMBOL        FE
@@ -98,7 +102,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   D:00DDH         SYMBOL        I2SCLH
   D:00DCH         SYMBOL        I2SCLL
   D:00D9H         SYMBOL        I2STAT
-  C:000CH         SYMBOL        IBSP
+  C:0026H         SYMBOL        IBSP
   B:00A0H.7       SYMBOL        ICA
   B:00A0H.0       SYMBOL        ICB
   D:00ABH         SYMBOL        ICRAH
@@ -109,19 +113,19 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   B:0088H.3       SYMBOL        IE1
   D:00A8H         SYMBOL        IEN0
   D:00E8H         SYMBOL        IEN1
-  C:0009H         SYMBOL        INC_B
+  C:0023H         SYMBOL        INC_B
   B:0090H.3       SYMBOL        INT0
   B:0090H.4       SYMBOL        INT1
   D:00B8H         SYMBOL        IP0
   D:00B7H         SYMBOL        IP0H
   D:00F8H         SYMBOL        IP1
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/13/2017  01:47:39  PAGE 3
+
+
   D:00F7H         SYMBOL        IP1H
   B:0088H.0       SYMBOL        IT0
   B:0088H.2       SYMBOL        IT1
   B:0080H.0       SYMBOL        KB0
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/12/2017  23:48:47  PAGE 3
-
-
   B:0080H.1       SYMBOL        KB1
   B:0080H.2       SYMBOL        KB2
   B:0080H.3       SYMBOL        KB3
@@ -132,11 +136,11 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   D:0094H         SYMBOL        KBCON
   D:0086H         SYMBOL        KBMASK
   D:0093H         SYMBOL        KBPATN
-  C:001DH         SYMBOL        LEDS
-  C:0052H         SYMBOL        LOOP0
-  C:0050H         SYMBOL        LOOP1
-  C:004EH         SYMBOL        LOOP2
-  C:004CH         SYMBOL        LOOP3
+  C:0037H         SYMBOL        LEDS
+  C:0073H         SYMBOL        LOOP0
+  C:0071H         SYMBOL        LOOP1
+  C:006FH         SYMBOL        LOOP2
+  C:006DH         SYMBOL        LOOP3
   B:00A0H.3       SYMBOL        MISO
   B:00A0H.2       SYMBOL        MOSI
   B:00A0H.6       SYMBOL        OCA
@@ -175,13 +179,13 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   B:00F8H.1       SYMBOL        PKBI
   B:00C8H.7       SYMBOL        PLLEN
   B:00B8H.4       SYMBOL        PS
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/13/2017  01:47:39  PAGE 4
+
+
   B:00F8H.3       SYMBOL        PSPI
   B:00B8H.4       SYMBOL        PSR
   B:00F8H.6       SYMBOL        PST
   D:00D0H         SYMBOL        PSW
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/12/2017  23:48:47  PAGE 4
-
-
   B:00B8H.1       SYMBOL        PT0
   D:00F6H         SYMBOL        PT0AD
   B:00B8H.3       SYMBOL        PT1
@@ -189,7 +193,9 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   B:00B8H.0       SYMBOL        PX0
   B:00B8H.2       SYMBOL        PX1
   B:0098H.2       SYMBOL        RB8
+  C:0019H         SYMBOL        RBSP
   B:0098H.4       SYMBOL        REN
+  C:0016H         SYMBOL        RES_B
   B:0098H.0       SYMBOL        RI
   B:00D0H.3       SYMBOL        RS0
   B:00D0H.4       SYMBOL        RS1
@@ -206,7 +212,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   D:0098H         SYMBOL        SCON
   B:0090H.3       SYMBOL        SDA
   B:00D8H.3       SYMBOL        SI
-  C:0034H         SYMBOL        SKIP_BP
+  C:004EH         SYMBOL        SKIP_BP
   B:0098H.7       SYMBOL        SM0
   B:0098H.6       SYMBOL        SM1
   B:0098H.5       SYMBOL        SM2
@@ -233,15 +239,15 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   D:008DH         SYMBOL        TH1
   D:00CDH         SYMBOL        TH2
   B:0098H.1       SYMBOL        TI
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/13/2017  01:47:39  PAGE 5
+
+
   D:00C9H         SYMBOL        TICR2
   D:00E9H         SYMBOL        TIFR2
   D:00DEH         SYMBOL        TISE2
   D:008AH         SYMBOL        TL0
   D:008BH         SYMBOL        TL1
   D:00CCH         SYMBOL        TL2
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/12/2017  23:48:47  PAGE 5
-
-
   D:0089H         SYMBOL        TMOD
   B:00C8H.0       SYMBOL        TMOD20
   B:00C8H.1       SYMBOL        TMOD21
@@ -262,58 +268,74 @@ SYMBOL TABLE OF MODULE:  .\Objects\Pro1 (PRO1)
   C:0000H         LINE#         5
   C:0003H         LINE#         6
   C:0006H         LINE#         7
-  C:0009H         LINE#         9
-  C:000CH         LINE#         10
-  C:000EH         LINE#         11
-  C:0011H         LINE#         12
-  C:0012H         LINE#         13
-  C:0014H         LINE#         15
-  C:0017H         LINE#         16
-  C:0019H         LINE#         17
-  C:001CH         LINE#         18
-  C:001DH         LINE#         20
-  C:001EH         LINE#         22
-  C:0020H         LINE#         23
-  C:0022H         LINE#         25
-  C:0024H         LINE#         26
-  C:0026H         LINE#         28
-  C:0028H         LINE#         29
-  C:002AH         LINE#         31
-  C:002CH         LINE#         32
-  C:002EH         LINE#         35
-  C:002FH         LINE#         36
-  C:0032H         LINE#         37
-  C:0034H         LINE#         38
-  C:0036H         LINE#         40
-  C:0038H         LINE#         41
-  C:0039H         LINE#         42
-  C:003BH         LINE#         44
-  C:003DH         LINE#         46
-  C:003FH         LINE#         47
-  C:0041H         LINE#         48
-  C:0043H         LINE#         49
-  C:0045H         LINE#         50
-  C:0047H         LINE#         51
+  C:0009H         LINE#         10
+  C:000BH         LINE#         12
+  C:000EH         LINE#         13
+  C:0010H         LINE#         14
+  C:0013H         LINE#         15
+  C:0014H         LINE#         16
+  C:0016H         LINE#         18
+  C:0019H         LINE#         19
+  C:001BH         LINE#         20
+  C:001EH         LINE#         21
+  C:001FH         LINE#         22
+  C:0021H         LINE#         23
+  C:0023H         LINE#         25
+  C:0026H         LINE#         26
+  C:0028H         LINE#         27
+  C:002BH         LINE#         28
+  C:002CH         LINE#         29
+  C:002EH         LINE#         31
+  C:0031H         LINE#         32
+  C:0033H         LINE#         33
+  C:0036H         LINE#         34
+  C:0037H         LINE#         36
+  C:0038H         LINE#         38
+  C:003AH         LINE#         39
+  C:003CH         LINE#         41
+  C:003EH         LINE#         42
+  C:0040H         LINE#         44
+  C:0042H         LINE#         45
+  C:0044H         LINE#         47
+  C:0046H         LINE#         48
+  C:0048H         LINE#         51
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/13/2017  01:47:39  PAGE 6
+
+
   C:0049H         LINE#         52
-  C:004AH         LINE#         54
-  C:004CH         LINE#         55
-  C:004EH         LINE#         56
-  C:0050H         LINE#         57
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/12/2017  23:48:47  PAGE 6
-
-
-  C:0052H         LINE#         58
-  C:0053H         LINE#         60
-  C:0055H         LINE#         61
-  C:0057H         LINE#         62
-  C:0059H         LINE#         63
-  C:005BH         LINE#         64
-  C:005DH         LINE#         65
+  C:004CH         LINE#         53
+  C:004EH         LINE#         54
+  C:0050H         LINE#         56
+  C:0052H         LINE#         57
+  C:0054H         LINE#         58
+  C:0055H         LINE#         59
+  C:0057H         LINE#         61
+  C:005AH         LINE#         62
+  C:005BH         LINE#         63
+  C:005DH         LINE#         64
+  C:005EH         LINE#         66
+  C:0060H         LINE#         67
+  C:0062H         LINE#         68
+  C:0064H         LINE#         69
+  C:0066H         LINE#         70
+  C:0068H         LINE#         71
+  C:006AH         LINE#         72
+  C:006BH         LINE#         74
+  C:006DH         LINE#         75
+  C:006FH         LINE#         76
+  C:0071H         LINE#         77
+  C:0073H         LINE#         78
+  C:0074H         LINE#         80
+  C:0076H         LINE#         81
+  C:0078H         LINE#         82
+  C:007AH         LINE#         83
+  C:007CH         LINE#         84
+  C:007EH         LINE#         85
   -------         ENDMOD        PRO1
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 005EH BYTE ( 4%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 007FH BYTE ( 6%) *
 ******************************************************************************
 
-Program Size: data=8.0 xdata=0 code=94
+Program Size: data=8.0 xdata=0 code=127
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PRO1                                                                 10/12/2017 23:48:47 PAGE     1
+A51 MACRO ASSEMBLER  PRO1                                                                 10/13/2017 01:47:39 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.5.0
@@ -122,7 +122,7 @@ LOC  OBJ            LINE     SOURCE
 
   0084          +1    57     KB4         BIT     0x84
 
-A51 MACRO ASSEMBLER  PRO1                                                                 10/12/2017 23:48:47 PAGE     2
+A51 MACRO ASSEMBLER  PRO1                                                                 10/13/2017 01:47:39 PAGE     2
 
   0085          +1    58     KB5         BIT     0x85
 
@@ -256,7 +256,7 @@ LOC  OBJ            LINE     SOURCE
 
   008A          +1   123     TL0         DATA        0x8A
 
-A51 MACRO ASSEMBLER  PRO1                                                                 10/12/2017 23:48:47 PAGE     3
+A51 MACRO ASSEMBLER  PRO1                                                                 10/13/2017 01:47:39 PAGE     3
 
   008C          +1   124     TH0         DATA        0x8C
 
@@ -390,7 +390,7 @@ LOC  OBJ            LINE     SOURCE
 
   00D3          +1   189     RTCL    DATA    0xD3
 
-A51 MACRO ASSEMBLER  PRO1                                                                 10/12/2017 23:48:47 PAGE     4
+A51 MACRO ASSEMBLER  PRO1                                                                 10/13/2017 01:47:39 PAGE     4
 
   00D2          +1   190     RTCH    DATA    0xD2
 
@@ -524,131 +524,171 @@ LOC  OBJ            LINE     SOURCE
 
 0006 758400          255     MOV P0M1, #0                                    ;making P0 bidirectional
 
-A51 MACRO ASSEMBLER  PRO1                                                                 10/12/2017 23:48:47 PAGE     5
+A51 MACRO ASSEMBLER  PRO1                                                                 10/13/2017 01:47:39 PAGE     5
 
                      256     
 
-0009 20A008          257     INC_B:  JB P2.0, DEC_B                  ;increments if P2.0 is pressed
+                     257     
 
-000C 113D            258     IBSP:   ACALL DELAY                             ;delay to prevent debouncing
+0009 7A00            258     COUNTER:MOV R2, #0                              ;set the exit marker to 0.
 
-000E 30A0FB          259                     JNB P2.0, IBSP                  ;holds until button not pressed
+                     259     
 
-0011 04              260                     INC A
+000B 20A208          260     EXIT_B: JB P2.2, RES_B                  ;resets if P2.0 is pressed
 
-0012 8009            261                     SJMP LEDS
+000E 115E            261     EBSP:   ACALL DELAY                             ;delay to prevent debouncing
 
-                     262                     
+0010 30A2FB          262                     JNB P2.2, EBSP                  ;holds until button not pressed
 
-0014 2081F2          263     DEC_B:  JB P0.1, INC_B                  ;deincrements if P0.1 is pressed
+0013 0A              263                     INC R2                                  ;R2 is a flag for exit
 
-0017 113D            264     DBSP:   ACALL DELAY                             ;delay to prevent debouncing
+0014 8008            264                     SJMP CLR_EX
 
-0019 3081FB          265                     JNB P0.1, DBSP                  ;holds until button not pressed
+                     265     
 
-001C 14              266                     DEC A
+0016 20A30A          266     RES_B:  JB P2.3, INC_B                  ;resets if P2.0 is pressed
 
-                     267                     
+0019 115E            267     RBSP:   ACALL DELAY                             ;delay to prevent debouncing
 
-001D F4              268     LEDS:   CPL A           ;complement so bits of A are fight for LED output
+001B 30A3FB          268                     JNB P2.3, RBSP                  ;holds until button not pressed
 
-                     269     
+001E E4              269     CLR_EX: CLR A                                   ;resets A
 
-001E A2E0            270                     MOV C, ACC.0                    ;stores 0 bit of A in C 
+001F 116B            270                     ACALL BEEP                              ;beeps if reset
 
-0020 9284            271                     MOV P0.4, C                     ;o/p C to P0.4
+0021 8014            271                     SJMP LEDS
 
                      272                     
 
-0022 A2E1            273                     MOV C, ACC.1                    ;stores 1 bit of A in C
+0023 20A008          273     INC_B:  JB P2.0, DEC_B                  ;increments if P2.0 is pressed
 
-0024 92A7            274                     MOV P2.7, C                     ;o/p C to P2.7
+0026 115E            274     IBSP:   ACALL DELAY                             ;delay to prevent debouncing
 
-                     275     
+0028 30A0FB          275                     JNB P2.0, IBSP                  ;holds until button not pressed
 
-0026 A2E2            276                     MOV C, ACC.2                    ;stores 2 bit of A in C
+002B 04              276                     INC A
 
-0028 9285            277                     MOV P0.5, C                     ;o/p C to P0.5
+002C 8009            277                     SJMP LEDS
 
                      278                     
 
-002A A2E3            279                     MOV C, ACC.3                    ;stores 0 bit of A in C
+002E 2081DA          279     DEC_B:  JB P0.1, EXIT_B                         ;deincrements if P0.1 is pressed
 
-002C 92A4            280                     MOV P2.4, C                     ;o/p C to P2.4
+0031 115E            280     DBSP:   ACALL DELAY                             ;delay to prevent debouncing
 
-                     281     ;code above matches LEDS to A lower nibble so o/p can be seen
+0033 3081FB          281                     JNB P0.1, DBSP                  ;holds until button not pressed
 
-                     282     
+0036 14              282                     DEC A
 
-002E F4              283                     CPL A           ;restore A to proper binary not complement
+                     283                     
 
-002F 30E402          284                     JNB ACC.4, SKIP_BP      ;jumps if NOT rollover
+0037 F4              284     LEDS:   CPL A           ;complement so bits of A are fight for LED output
 
-0032 114A            285                     ACALL BEEP                      ;call beep when rollover
+                     285     
 
-0034 540F            286     SKIP_BP:ANL A, #0FH                     ;masks the upper nibble of A
+0038 A2E0            286                     MOV C, ACC.0                    ;stores 0 bit of A in C 
 
-                     287                     
+003A 9284            287                     MOV P0.4, C                     ;o/p C to P0.4
 
-0036 A2D0            288                     MOV C, PSW.0            ;code for showing parity flag
+                     288                     
 
-0038 B3              289                     CPL C
+003C A2E1            289                     MOV C, ACC.1                    ;stores 1 bit of A in C
 
-0039 92A5            290                     MOV P2.5, C
+003E 92A7            290                     MOV P2.7, C                     ;o/p C to P2.7
 
-                     291                     
+                     291     
 
-003B 80CC            292                     SJMP INC_B                      ;back to polling
+0040 A2E2            292                     MOV C, ACC.2                    ;stores 2 bit of A in C
 
-                     293                             
+0042 9285            293                     MOV P0.5, C                     ;o/p C to P0.5
 
-003D 7C05            294     DELAY:  MOV R4, #05H
+                     294                     
 
-003F 7BFF            295     DELAY1: MOV R3, #0FFH
+0044 A2E3            295                     MOV C, ACC.3                    ;stores 0 bit of A in C
 
-0041 7AFF            296     DELAY2: MOV R2, #0FFH
+0046 92A4            296                     MOV P2.4, C                     ;o/p C to P2.4
 
-0043 DAFE            297     DELAY3: DJNZ R2, DELAY3                 ;creates a delay to prevent debouncing
+                     297     ;code above matches LEDS to A lower nibble so o/p can be seen
 
-0045 DBFA            298                     DJNZ R3, DELAY2
+                     298     
 
-0047 DCF6            299                     DJNZ R4, DELAY1
+0048 F4              299                     CPL A           ;re-store A to proper binary not complement
 
-0049 22              300                     RET
+0049 30E402          300                     JNB ACC.4, SKIP_BP      ;jumps if NOT rollover
 
-                     301     
+004C 116B            301                     ACALL BEEP                      ;call beep when rollover
 
-004A 7B40            302     BEEP:   MOV R3,#64      
+004E 540F            302     SKIP_BP:ANL A, #0FH                     ;masks the upper nibble of A
 
-004C 7A20            303     LOOP3:  MOV R2,#32       
+                     303             
 
-004E 7920            304     LOOP2:  MOV R1,#32        
+0050 A2D0            304                     MOV C, PSW.0    ;code for showing parity flag LED
 
-0050 7820            305     LOOP1:  MOV R0,#32         
+0052 9287            305                     MOV P0.7, C             ;green shows not parity
 
-0052 00              306     LOOP0:  NOP               
+0054 B3              306                     CPL C
 
-                     307             
+0055 92A5            307                     MOV P2.5, C             ;yellow shows parity
 
-0053 D8FD            308                     DJNZ R0,LOOP0     ;DECREMENTS REGISTER0 RETURNS TO LOOP0
+                     308                     
 
-0055 D9F9            309                     DJNZ R1,LOOP1     ;DECREMENTS REGISTER1 RETURNS TO LOOP1
+0057 BA01BC          309                     CJNE R2, #1, Res_B      ;back to polling if not exit flag
 
-0057 B297            310                     CPL  P1.7         ;BEEP!!!
+005A D3              310                     SETB C                  ;Reset not parity LED
 
-0059 DAF3            311                     DJNZ R2,LOOP2     ;DECREMENTS REGISTER2 RETURNS TO LOOP2
+005B 9287            311                     MOV P0.7, C
 
-005B DBEF            312                     DJNZ R3,LOOP3     ;DECREMENTS REGISTER3 RETURNS TO LOOP3
+005D 22              312                     RET                             ;EXITS counter
 
-005D 22              313                     RET
+                     313     
 
-                     314     
+005E 7C05            314     DELAY:  MOV R4, #05H
 
-                     315     
+0060 7BFF            315     DELAY1: MOV R3, #0FFH
 
-                     316     END
+0062 7AFF            316     DELAY2: MOV R2, #0FFH
 
-A51 MACRO ASSEMBLER  PRO1                                                                 10/12/2017 23:48:47 PAGE     6
+0064 DAFE            317     DELAY3: DJNZ R2, DELAY3                 ;creates a delay to prevent debouncing
+
+0066 DBFA            318                     DJNZ R3, DELAY2
+
+0068 DCF6            319                     DJNZ R4, DELAY1
+
+006A 22              320                     RET
+
+                     321     
+
+A51 MACRO ASSEMBLER  PRO1                                                                 10/13/2017 01:47:39 PAGE     6
+
+006B 7B40            322     BEEP:   MOV R3,#64      
+
+006D 7A20            323     LOOP3:  MOV R2,#32       
+
+006F 7920            324     LOOP2:  MOV R1,#32        
+
+0071 7820            325     LOOP1:  MOV R0,#32         
+
+0073 00              326     LOOP0:  NOP               
+
+                     327             
+
+0074 D8FD            328                     DJNZ R0,LOOP0     ;DECREMENTS REGISTER0 RETURNS TO LOOP0
+
+0076 D9F9            329                     DJNZ R1,LOOP1     ;DECREMENTS REGISTER1 RETURNS TO LOOP1
+
+0078 B297            330                     CPL  P1.7         ;BEEP!!!
+
+007A DAF3            331                     DJNZ R2,LOOP2     ;DECREMENTS REGISTER2 RETURNS TO LOOP2
+
+007C DBEF            332                     DJNZ R3,LOOP3     ;DECREMENTS REGISTER3 RETURNS TO LOOP3
+
+007E 22              333                     RET
+
+                     334     
+
+                     335     END
+
+A51 MACRO ASSEMBLER  PRO1                                                                 10/13/2017 01:47:39 PAGE     7
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -663,7 +703,7 @@ ALTAB. . . . . . .  B ADDR   00C8H.3 A
 ALTCD. . . . . . .  B ADDR   00C8H.4 A   
 AUXR1. . . . . . .  D ADDR   00A2H   A   
 B. . . . . . . . .  D ADDR   00F0H   A   
-BEEP . . . . . . .  C ADDR   004AH   A   
+BEEP . . . . . . .  C ADDR   006BH   A   
 BRGCON . . . . . .  D ADDR   00BDH   A   
 BRGR0. . . . . . .  D ADDR   00BEH   A   
 BRGR1. . . . . . .  D ADDR   00BFH   A   
@@ -675,27 +715,30 @@ CIN1A. . . . . . .  B ADDR   0080H.4 A
 CIN1B. . . . . . .  B ADDR   0080H.3 A   
 CIN2A. . . . . . .  B ADDR   0080H.2 A   
 CIN2B. . . . . . .  B ADDR   0080H.1 A   
+CLR_EX . . . . . .  C ADDR   001EH   A   
 CMP1 . . . . . . .  D ADDR   00ACH   A   
 CMP1O. . . . . . .  B ADDR   0080H.6 A   
 CMP2 . . . . . . .  D ADDR   00ADH   A   
 CMP2O. . . . . . .  B ADDR   0080H.0 A   
 CMPREF . . . . . .  B ADDR   0080H.5 A   
+COUNTER. . . . . .  C ADDR   0009H   A   
 CRSEL. . . . . . .  B ADDR   00D8H.0 A   
 CY . . . . . . . .  B ADDR   00D0H.7 A   
-DBSP . . . . . . .  C ADDR   0017H   A   
-DEC_B. . . . . . .  C ADDR   0014H   A   
+DBSP . . . . . . .  C ADDR   0031H   A   
+DEC_B. . . . . . .  C ADDR   002EH   A   
 DEEADR . . . . . .  D ADDR   00F3H   A   
 DEECON . . . . . .  D ADDR   00F1H   A   
 DEEDAT . . . . . .  D ADDR   00F2H   A   
-DELAY. . . . . . .  C ADDR   003DH   A   
-DELAY1 . . . . . .  C ADDR   003FH   A   
-DELAY2 . . . . . .  C ADDR   0041H   A   
-DELAY3 . . . . . .  C ADDR   0043H   A   
+DELAY. . . . . . .  C ADDR   005EH   A   
+DELAY1 . . . . . .  C ADDR   0060H   A   
+DELAY2 . . . . . .  C ADDR   0062H   A   
+DELAY3 . . . . . .  C ADDR   0064H   A   
 DIVM . . . . . . .  D ADDR   0095H   A   
 DPH. . . . . . . .  D ADDR   0083H   A   
 DPL. . . . . . . .  D ADDR   0082H   A   
 EA . . . . . . . .  B ADDR   00A8H.7 A   
 EBO. . . . . . . .  B ADDR   00A8H.5 A   
+EBSP . . . . . . .  C ADDR   000EH   A   
 EC . . . . . . . .  B ADDR   00E8H.2 A   
 ECCU . . . . . . .  B ADDR   00E8H.4 A   
 EI2C . . . . . . .  B ADDR   00E8H.0 A   
@@ -710,21 +753,22 @@ ET1. . . . . . . .  B ADDR   00A8H.3 A
 EWDRT. . . . . . .  B ADDR   00A8H.6 A   
 EX0. . . . . . . .  B ADDR   00A8H.0 A   
 EX1. . . . . . . .  B ADDR   00A8H.2 A   
+EXIT_B . . . . . .  C ADDR   000BH   A   
 F0 . . . . . . . .  B ADDR   00D0H.5 A   
 F1 . . . . . . . .  B ADDR   00D0H.1 A   
+A51 MACRO ASSEMBLER  PRO1                                                                 10/13/2017 01:47:39 PAGE     8
+
 FE . . . . . . . .  B ADDR   0098H.7 A   
 HLTEN. . . . . . .  B ADDR   00C8H.5 A   
 HLTRN. . . . . . .  B ADDR   00C8H.6 A   
 I2ADR. . . . . . .  D ADDR   00DBH   A   
-A51 MACRO ASSEMBLER  PRO1                                                                 10/12/2017 23:48:47 PAGE     7
-
 I2CON. . . . . . .  D ADDR   00D8H   A   
 I2DAT. . . . . . .  D ADDR   00DAH   A   
 I2EN . . . . . . .  B ADDR   00D8H.6 A   
 I2SCLH . . . . . .  D ADDR   00DDH   A   
 I2SCLL . . . . . .  D ADDR   00DCH   A   
 I2STAT . . . . . .  D ADDR   00D9H   A   
-IBSP . . . . . . .  C ADDR   000CH   A   
+IBSP . . . . . . .  C ADDR   0026H   A   
 ICA. . . . . . . .  B ADDR   00A0H.7 A   
 ICB. . . . . . . .  B ADDR   00A0H.0 A   
 ICRAH. . . . . . .  D ADDR   00ABH   A   
@@ -735,7 +779,7 @@ IE0. . . . . . . .  B ADDR   0088H.1 A
 IE1. . . . . . . .  B ADDR   0088H.3 A   
 IEN0 . . . . . . .  D ADDR   00A8H   A   
 IEN1 . . . . . . .  D ADDR   00E8H   A   
-INC_B. . . . . . .  C ADDR   0009H   A   
+INC_B. . . . . . .  C ADDR   0023H   A   
 INT0 . . . . . . .  B ADDR   0090H.3 A   
 INT1 . . . . . . .  B ADDR   0090H.4 A   
 IP0. . . . . . . .  D ADDR   00B8H   A   
@@ -755,11 +799,11 @@ KB7. . . . . . . .  B ADDR   0080H.7 A
 KBCON. . . . . . .  D ADDR   0094H   A   
 KBMASK . . . . . .  D ADDR   0086H   A   
 KBPATN . . . . . .  D ADDR   0093H   A   
-LEDS . . . . . . .  C ADDR   001DH   A   
-LOOP0. . . . . . .  C ADDR   0052H   A   
-LOOP1. . . . . . .  C ADDR   0050H   A   
-LOOP2. . . . . . .  C ADDR   004EH   A   
-LOOP3. . . . . . .  C ADDR   004CH   A   
+LEDS . . . . . . .  C ADDR   0037H   A   
+LOOP0. . . . . . .  C ADDR   0073H   A   
+LOOP1. . . . . . .  C ADDR   0071H   A   
+LOOP2. . . . . . .  C ADDR   006FH   A   
+LOOP3. . . . . . .  C ADDR   006DH   A   
 MISO . . . . . . .  B ADDR   00A0H.3 A   
 MOSI . . . . . . .  B ADDR   00A0H.2 A   
 OCA. . . . . . . .  B ADDR   00A0H.6 A   
@@ -780,12 +824,12 @@ P0 . . . . . . . .  D ADDR   0080H   A
 P0M1 . . . . . . .  D ADDR   0084H   A   
 P0M2 . . . . . . .  D ADDR   0085H   A   
 P1 . . . . . . . .  D ADDR   0090H   A   
+A51 MACRO ASSEMBLER  PRO1                                                                 10/13/2017 01:47:39 PAGE     9
+
 P1M1 . . . . . . .  D ADDR   0091H   A   
 P1M2 . . . . . . .  D ADDR   0092H   A   
 P2 . . . . . . . .  D ADDR   00A0H   A   
 P2M1 . . . . . . .  D ADDR   00A4H   A   
-A51 MACRO ASSEMBLER  PRO1                                                                 10/12/2017 23:48:47 PAGE     8
-
 P2M2 . . . . . . .  D ADDR   00A5H   A   
 P3 . . . . . . . .  D ADDR   00B0H   A   
 P3M1 . . . . . . .  D ADDR   00B1H   A   
@@ -811,7 +855,9 @@ PWDRT. . . . . . .  B ADDR   00B8H.6 A
 PX0. . . . . . . .  B ADDR   00B8H.0 A   
 PX1. . . . . . . .  B ADDR   00B8H.2 A   
 RB8. . . . . . . .  B ADDR   0098H.2 A   
+RBSP . . . . . . .  C ADDR   0019H   A   
 REN. . . . . . . .  B ADDR   0098H.4 A   
+RES_B. . . . . . .  C ADDR   0016H   A   
 RI . . . . . . . .  B ADDR   0098H.0 A   
 RS0. . . . . . . .  B ADDR   00D0H.3 A   
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
@@ -828,7 +874,7 @@ SCL. . . . . . . .  B ADDR   0090H.2 A
 SCON . . . . . . .  D ADDR   0098H   A   
 SDA. . . . . . . .  B ADDR   0090H.3 A   
 SI . . . . . . . .  B ADDR   00D8H.3 A   
-SKIP_BP. . . . . .  C ADDR   0034H   A   
+SKIP_BP. . . . . .  C ADDR   004EH   A   
 SM0. . . . . . . .  B ADDR   0098H.7 A   
 SM1. . . . . . . .  B ADDR   0098H.6 A   
 SM2. . . . . . . .  B ADDR   0098H.5 A   
@@ -846,14 +892,14 @@ T1 . . . . . . . .  B ADDR   0080H.7 A
 TAMOD. . . . . . .  D ADDR   008FH   A   
 TB8. . . . . . . .  B ADDR   0098H.3 A   
 TCON . . . . . . .  D ADDR   0088H   A   
+A51 MACRO ASSEMBLER  PRO1                                                                 10/13/2017 01:47:39 PAGE    10
+
 TCR20. . . . . . .  D ADDR   00C8H   A   
 TCR21. . . . . . .  D ADDR   00F9H   A   
 TDIR2. . . . . . .  B ADDR   00C8H.2 A   
 TF0. . . . . . . .  B ADDR   0088H.5 A   
 TF1. . . . . . . .  B ADDR   0088H.7 A   
 TH0. . . . . . . .  D ADDR   008CH   A   
-A51 MACRO ASSEMBLER  PRO1                                                                 10/12/2017 23:48:47 PAGE     9
-
 TH1. . . . . . . .  D ADDR   008DH   A   
 TH2. . . . . . . .  D ADDR   00CDH   A   
 TI . . . . . . . .  B ADDR   0098H.1 A   
