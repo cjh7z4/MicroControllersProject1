@@ -37,8 +37,108 @@ DABSP:	ACALL DELAY
 GEORGE:
 		LJMP MAIN				;empty location for George's function
 		
-DARRIN:
-		LJMP MAIN				;empty program for Darrin's function
+;;;;;;;;;Darrin's function below		
+DARRIN:							;program to make a fun led display show
+		ACALL DELAY
+		ACALL DELAY
+		CLR P1.6				;middle middle
+		ACALL DELAY
+		SETB P1.6
+		CLR P0.7				;bottom middle
+		ACALL DELAY
+		SETB P0.7
+		CLR P2.5				;BL
+		ACALL DELAY
+		SETB P2.5
+		CLR P0.6				;ML
+		ACALL DELAY
+		SETB P0.6
+		CLR P2.4				;TL
+		ACALL DELAY
+		SETB P2.4
+		CLR P0.5				;TM
+		ACALL DELAY
+		SETB P0.5
+		CLR P2.7				;TR
+		ACALL DELAY
+		SETB P2.7
+		CLR P0.4				;MR
+		ACALL DELAY
+		SETB P0.4
+		CLR P2.6				;BR
+		ACALL DELAY
+		SETB P2.6
+		CLR P0.7				;BM
+		ACALL DELAY
+		SETB P0.7
+		CLR P1.6				;MM ON
+		ACALL DELAY
+		CLR P2.4				;TL ON
+		CLR P2.7				;TR ON
+		CLR P2.6				;BR ON
+		CLR P2.5				;BL ON
+		SETB P1.6				;MM OFF
+		ACALL DELAY
+		CLR P0.5				;TM ON
+		CLR P0.7				;BM ON
+		CLR P0.6				;ML ON
+		CLR P0.4				;MR ON
+		ACALL DELAY
+		ACALL DELAY
+		SETB P2.4				;TL OFF
+		ACALL DELAY
+		SETB P0.6				;ML OFF
+		ACALL DELAY
+		SETB P2.5				;BL OFF
+		ACALL DELAY
+		SETB P0.7				;BM OFF
+		ACALL DELAY
+		SETB P2.6				;BR OFF
+		ACALL DELAY
+		SETB P0.4				;MR OFF
+		ACALL DELAY
+		SETB P2.7				;TR OFF
+		ACALL DELAY
+		SETB P0.5				;TM OFF
+		ACALL DELAY
+		CLR P1.6				;MM ON
+		ACALL DELAY
+		ACALL DELAY
+		SETB P1.6				;MM OFF
+		ACALL DELAY
+		ACALL DELAY
+								;START CIRCLE LOOP
+		ACALL DELAY
+		MOV R7, #04H
+CIRCLE: CLR P2.4				;TL ON
+		CLR P2.7				;TR ON
+		CLR P2.6				;BR ON
+		CLR P2.5				;BL ON
+		ACALL DELAY
+		SETB P2.4				;TL OFF
+		SETB P2.7				;TR OFF
+		SETB P2.6				;BR OFF
+		SETB P2.5				;BL OFF
+		CLR P0.5				;TM ON
+		CLR P0.7				;BM ON
+		CLR P0.6				;ML ON
+		CLR P0.4				;MR ON
+		ACALL DELAY
+		SETB P0.5				;TM OFF
+		SETB P0.7				;BM OFF
+		SETB P0.6				;ML OFF
+		SETB P0.4				;MT OFF
+		DJNZ R7, CIRCLE
+		ACALL DELAY
+		CLR P1.6				;MM ON
+		ACALL DELAY
+		ACALL DELAY
+		SETB P1.6				;MM OFF
+		ACALL DELAY
+		ACALL DELAY
+		ACALL DELAY
+		
+		LJMP MAIN	
 		
 ;;;;;;;end button checking loop and start of General subroutines
 
@@ -86,7 +186,7 @@ IBSP:	ACALL DELAY				;delay to prevent debouncing
 		INC A
 		SJMP LEDS
 		
-DEC_B:	JB P0.1, EXIT_B 			;deincrements if P0.1 is pressed
+DEC_B:	JB P0.1, EXIT_B 		;deincrements if P0.1 is pressed
 DBSP:	ACALL DELAY				;delay to prevent debouncing
 		JNB P0.1, DBSP 			;holds until button not pressed
 		DEC A

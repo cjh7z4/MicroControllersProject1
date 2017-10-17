@@ -16,7 +16,7 @@
     <View>
       <WinId>346</WinId>
       <ViewName>Code Coverage</ViewName>
-      <TableColWidths>-139 1309</TableColWidths>
+      <TableColWidths>1010 160</TableColWidths>
     </View>
     <View>
       <WinId>204</WinId>
@@ -3390,9 +3390,9 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>.\Pro1.a51</Name>
-        <ColumnNumber>19</ColumnNumber>
-        <TopLine>37</TopLine>
-        <CurrentLine>45</CurrentLine>
+        <ColumnNumber>32</ColumnNumber>
+        <TopLine>1</TopLine>
+        <CurrentLine>189</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
